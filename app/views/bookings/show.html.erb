@@ -1,0 +1,13 @@
+<h1>Booking Confirmation</h1>
+
+<p>Your flight has been booked.</p>
+<p>Flight <%= @booking.flight.id+200 %>, <%= @booking.flight.from_airport.airport_code %> to <%= @booking.flight.to_airport.airport_code %></p>
+<p>Your flight is scheduled for <%= @booking.flight.date.strftime("%A, %m/%d/%Y at %H:%M %p") %> </p>
+<p>Please arrive at least 2 hours early to make sure TSA has a chance to screw up!</p>
+
+<h3>Passengers:</h3>
+<ol>
+  <% @booking.passengers.each do |passenger| %>
+    <li> <%= "#{passenger.name}, #{passenger.email}" %></li>
+  <% end %>
+</ol>

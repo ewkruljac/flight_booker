@@ -1,0 +1,20 @@
+<h1>Book Your Flight</h1>
+
+<h2>Flight #<%= @flight.id+200 %></h2>
+
+<h3><%= @flight.from_airport.city %> To <%= @flight.to_airport.city %></h3>
+
+<p>Flight Date: <%= @flight.date.strftime("%A, %m/%d/%Y at %H:%M %p") %></p>
+
+<%= form_for(@booking) do |f| %>
+  <%= f.hidden_field :flight_id %>
+  <%= f.fields_for :passengers do |passenger| %>
+    <%= passenger.label :name %>
+    <%= passenger.text_field :name %>
+
+    <%= passenger.label :email %>
+    <%= passenger.text_field :email %>
+  <% end %>
+
+  <%= f.submit "Book Flight", class: "button" %>
+<% end %>

@@ -1,0 +1,28 @@
+<h1>Flights</h1>
+<%= form_tag flights_path, method: 'GET' do %>
+  <%= hidden_field_tag :search %>
+  <%= select_tag :from, options_for_select(@all_airports), prompt: "From" %>
+  <%= select_tag :to, options_for_select(@all_airports), prompt: "To" %>
+  <%= select_tag :date, options_for_select(@dates), prompt: "Date" %>
+  <%= select_tag :passengers, options_for_select(@passengers), prompt: "Passengers" %>
+  <%= submit_tag "Search", :name => nil, class: "button" %>
+
+<% end %>
+
+<% if @matching_flights.any? %>
+  <h1>Available Flights</h1>
+  <%= form_tag new_booking_path, method: 'GET' do %>
+    <% @matching_flights.each do |e| %>
+      <p>
+        <%= radio_button_tag :flight_id, e.id %>
+        From: <%= e.from_airport.city %>
+        To: <%= e.to_airport.city %>
+        Date: <%= e.date.strftime("%A, %m/%d/%Y at %H:%M %p") %>
+        Duration: <%= distance_of_time_in_words(e.duration) %>
+        <%= submit_tag "Choose Flight", :name => nil, class: "button" %>
+        <%= hidden_field_tag :passengers, params[:passengers] %>
+      </p>
+    <% end %>
+  <% end %>
+
+<% end %>
